@@ -1,2 +1,1 @@
 Testing that the chain of actions are performed on push.
-Trying to get an action to trigger, from the completion of another actions.
