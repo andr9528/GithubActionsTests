@@ -1,0 +1,24 @@
+name: Automerge Main -> Staging
+
+on:
+  push:
+    branches: [ "main" ] # triggered when a push to 'main' happens.
+  workflow_dispatch: # on button click
+
+jobs:
+  merge-main-to-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Git config
+        run: |
+          git config --local user.email "${GITHUB_ACTOR}"
+          git config --local user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Merge 'main' to 'staging'
+        run: |
+          git fetch --unshallow
+          git checkout staging
+          git pull
+          git merge --no-ff origin/main -m "Automerge 'main' to 'staging'"
+          git push
+
