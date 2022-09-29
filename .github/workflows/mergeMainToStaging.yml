@@ -1,4 +1,4 @@
-name: Automerge Main -> Staging
+name: Automerge Main -> Staging -> Develop
 
 on:
   push:
