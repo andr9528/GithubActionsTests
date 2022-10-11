@@ -9,7 +9,7 @@ jobs:
   merge-main-to-staging:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set Git config
         run: |
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -23,23 +23,26 @@ jobs:
           git pull
           git merge --no-ff origin/main -m "Automerge 'main' to 'staging'. Action triggered by: ${GITHUB_ACTOR}."
           git push
-      - name: Echo Merge Status
-        run: echo "Merge was a ${{steps.Merge.outcome}}."
+      - name: Abort Merge
+        if: steps.Merge.outcome == 'failure'
+        run: |
+          echo "Merge was a ${{steps.Merge.outcome}}."
+          git merge --abort
       - name: Create PR on merge failure
         if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure
           body: Failed to merge 'main' into 'staging'.
-          branch: main
-          base: staging
+          base: main
+          branch: staging
 
 
   merge-staging-to-develop:
     needs: merge-main-to-staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set Git config
         run: |
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -53,13 +56,16 @@ jobs:
           git pull
           git merge --no-ff origin/staging -m "Automerge 'staging' to 'develop'. Action triggered by: ${GITHUB_ACTOR}."
           git push
-      - name: Echo Merge Status
-        run: echo "Merge was a ${{steps.Merge.outcome}}."
+      - name: Abort Merge
+        if: steps.Merge.outcome == 'failure'
+        run: |
+          echo "Merge was a ${{steps.Merge.outcome}}."
+          git merge --abort
       - name: Create PR on merge failure
         if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure
           body: Failed to merge 'staging' into 'develop'.
-          branch: staging
-          base: develop
+          base: staging
+          branch: develop
