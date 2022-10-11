@@ -7,4 +7,4 @@ Testing if the Chain merge pick moves changes, even though the first one doesn't
 
 Testing if PR is created on merge conflict.
 
-Creating a new conflict from main.
+Creating a new conflict from staging...
