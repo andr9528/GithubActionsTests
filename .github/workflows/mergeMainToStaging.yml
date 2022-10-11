@@ -31,7 +31,6 @@ jobs:
         with:
           title: Automerge Failure
           body: Failed to merge 'main' into 'staging'.
-          branch: main
           base: staging
 
 
@@ -61,5 +60,4 @@ jobs:
         with:
           title: Automerge Failure
           body: Failed to merge 'staging' into 'develop'.
-          branch: staging
           base: develop
