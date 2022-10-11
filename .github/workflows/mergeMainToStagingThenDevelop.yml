@@ -32,6 +32,7 @@ jobs:
         if: steps.Merge.outcome == 'failure'
         run: |
           git reset --hard
+          git fetch --unshallow
           git checkout main
           git pull
       - name: Create PR on merge failure
@@ -70,6 +71,7 @@ jobs:
         if: steps.Merge.outcome == 'failure'
         run: |
           git reset --hard
+          git fetch --unshallow
           git checkout main
           git pull
       - name: Create PR on merge failure
