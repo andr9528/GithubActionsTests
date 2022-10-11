@@ -21,12 +21,12 @@ jobs:
           git fetch --unshallow
           git checkout staging
           git pull
-          # git merge --no-ff origin/main -m "Automerge 'main' to 'staging'. Action triggered by: ${GITHUB_ACTOR}."
+          git merge --no-ff origin/main -m "Automerge 'main' to 'staging'. Action triggered by: ${GITHUB_ACTOR}."
           # git push
       - name: Echo Merge Status
         run: echo "Merge was a ${{steps.Merge.outcome}}."
       - name: Create PR on merge failure
-        # if: steps.Merge.outcome == 'failure'
+        if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure
@@ -51,12 +51,12 @@ jobs:
           git fetch --unshallow
           git checkout develop
           git pull
-          # git merge --no-ff origin/staging -m "Automerge 'staging' to 'develop'. Action triggered by: ${GITHUB_ACTOR}."
+          git merge --no-ff origin/staging -m "Automerge 'staging' to 'develop'. Action triggered by: ${GITHUB_ACTOR}."
           # git push
       - name: Echo Merge Status
         run: echo "Merge was a ${{steps.Merge.outcome}}."
       - name: Create PR on merge failure
-        # if: steps.Merge.outcome == 'failure'
+        if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure

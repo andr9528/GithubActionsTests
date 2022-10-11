@@ -3,4 +3,6 @@ Trying to trigger action, from the completion of another action.
 
 Hej!
 
-Testing to see if PR is created on merge conflict.
+Testing if the Chain merge pick moves changes, even though the first one doesn't have a change.
+
+Testing if PR is created on merge conflict.
