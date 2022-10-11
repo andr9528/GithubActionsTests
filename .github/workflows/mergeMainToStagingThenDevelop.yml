@@ -28,14 +28,19 @@ jobs:
         run: |
           echo "Merge was a ${{steps.Merge.outcome}}."
           git merge --abort
+      - name: Prepare for PR
+        if: steps.Merge.outcome == 'failure'
+        run: |
+          git reset --hard
+          git checkout main
+          git pull
       - name: Create PR on merge failure
         if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure
           body: Failed to merge 'main' into 'staging'.
-          base: main
-          branch: staging
+          base: staging
 
 
   merge-staging-to-develop:
@@ -61,11 +66,16 @@ jobs:
         run: |
           echo "Merge was a ${{steps.Merge.outcome}}."
           git merge --abort
+      - name: Prepare for PR
+        if: steps.Merge.outcome == 'failure'
+        run: |
+          git reset --hard
+          git checkout main
+          git pull
       - name: Create PR on merge failure
         if: steps.Merge.outcome == 'failure'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Automerge Failure
           body: Failed to merge 'staging' into 'develop'.
-          base: staging
-          branch: develop
+          base: develop
