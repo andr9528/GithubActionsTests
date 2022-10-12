@@ -60,7 +60,7 @@ jobs:
               state: 'open',
               head: 'staging',
               base: 'develop'
-            })[0];
+            });
             core.info(JSON.stringify(Pr));
             const resultComment = await github.rest.issues.createComment({
             owner,
@@ -127,7 +127,7 @@ jobs:
               state: 'open',
               head: 'staging',
               base: 'develop'
-            })[0];
+            });
             core.info(JSON.stringify(Pr));
             const resultComment = await github.rest.issues.createComment({
             owner,
