@@ -36,6 +36,7 @@ jobs:
           destination_branch: staging
           pr_title: Automerge Failed
           pr_body: Failed to merge 'main' into 'staging'.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Create PR on merge failure
       #   if: steps.Merge.outcome == 'failure'
@@ -89,6 +90,7 @@ jobs:
           destination_branch: develop
           pr_title: Automerge Failed
           pr_body: Failed to merge 'staging' into 'develop'.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       # - name: Create PR on merge failure
       #   if: steps.Merge.outcome == 'failure'
       #   id: NewPr
