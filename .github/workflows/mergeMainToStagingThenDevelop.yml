@@ -61,7 +61,7 @@ jobs:
               head: 'staging',
               base: 'develop'
             })[0];
-            console.log(Pr);
+            opts.log.log(Pr);
             const resultComment = await github.rest.issues.createComment({
             owner,
             repo, 
@@ -128,7 +128,7 @@ jobs:
               head: 'staging',
               base: 'develop'
             })[0];
-            console.log(Pr);
+            opts.log.log(Pr);
             const resultComment = await github.rest.issues.createComment({
             owner,
             repo, 
