@@ -67,7 +67,7 @@ jobs:
             repo, 
             issue_number: Pr.data.number,
             body: [
-              'Failed to merge "staging" into "develop".',
+              'Failed to merge "main" into "staging".',
             ].join('\n')
             });
 
