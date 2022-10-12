@@ -64,7 +64,7 @@ jobs:
             const resultComment = await github.rest.issues.createComment({
             owner,
             repo, 
-            issue_number: Pr.number,
+            issue_number: Pr.data.number,
             body: [
               'Failed to merge "staging" into "develop".',
             ].join('\n')
@@ -130,7 +130,7 @@ jobs:
             const resultComment = await github.rest.issues.createComment({
             owner,
             repo, 
-            issue_number: Pr.number,
+            issue_number: Pr.data.number,
             body: [
               'Failed to merge "staging" into "develop".',
             ].join('\n')
