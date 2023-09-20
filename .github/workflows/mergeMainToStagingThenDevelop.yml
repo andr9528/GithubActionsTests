@@ -1,8 +1,8 @@
 name: Automerge Main -> Staging -> Develop
 
 on:
-  push:
-    branches: [ "main" ] # triggered when a push to 'main' happens.
+#  push:
+#    branches: [ "main" ] # triggered when a push to 'main' happens.
   workflow_dispatch: # on button click
 
 jobs:
@@ -28,20 +28,15 @@ jobs:
         run: |
           echo "Merge was a ${{steps.Merge.outcome}}."
           git merge --abort
-      - name: Prepare for PR
+      - name: Create Pull Request on Merge failure
         if: steps.Merge.outcome == 'failure'
-        run: |
-          git reset --hard
-          git checkout main
-          git pull
-      - name: Create PR on merge failure
-        if: steps.Merge.outcome == 'failure'
-        uses: peter-evans/create-pull-request@v4
+        uses: repo-sync/pull-request@v2
         with:
-          title: Automerge Failure
-          body: Failed to merge 'main' into 'staging'.
-          base: staging
-
+          source_branch: main
+          destination_branch: staging
+          pr_title: Automerge Failed
+          pr_body: Failed to merge 'main' into 'staging'.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   merge-staging-to-develop:
     needs: merge-main-to-staging
@@ -66,16 +61,14 @@ jobs:
         run: |
           echo "Merge was a ${{steps.Merge.outcome}}."
           git merge --abort
-      - name: Prepare for PR
+      - name: Create Pull Request on Merge failure
         if: steps.Merge.outcome == 'failure'
-        run: |
-          git reset --hard
-          git checkout main
-          git pull
-      - name: Create PR on merge failure
-        if: steps.Merge.outcome == 'failure'
-        uses: peter-evans/create-pull-request@v4
+        uses: repo-sync/pull-request@v2
         with:
-          title: Automerge Failure
-          body: Failed to merge 'staging' into 'develop'.
-          base: develop
+          source_branch: staging
+          destination_branch: develop
+          pr_title: Automerge Failed
+          pr_body: Failed to merge 'staging' into 'develop'.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+     
