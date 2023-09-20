@@ -1,0 +1,45 @@
+name: Merge Main -> Staging -> Develop
+
+on:
+  push:
+    branches: [ "main" ] # triggered when a push to 'main' happens.
+  workflow_dispatch: # on button click
+
+jobs:
+  merge-main-to-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Git config
+        run: |
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --local user.name "GitHub Actions # ${GITHUB_ACTOR}"
+      - name: Create Merge Pull Request - 'main' to 'staging'
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: main
+          destination_branch: staging
+          pr_title: Merge 'main' -> 'staging'
+          pr_body: |
+            Branch 'main' has changes not on 'staging' branch.
+            Merging this pull request will apply the changes to the 'staging' branch.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  merge-staging-to-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Git config
+        run: |
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --local user.name "GitHub Actions # ${GITHUB_ACTOR}"
+      - name: Create Merge Pull Request - 'main' to 'staging'
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: staging
+          destination_branch: develop
+          pr_title: Merge 'staging' -> 'develop'
+          pr_body: |
+            Branch 'staging' has changes not on 'develop' branch.
+            Merging this pull request will apply the changes to the 'develop' branch.
+          github_token: ${{ secrets.GITHUB_TOKEN }}

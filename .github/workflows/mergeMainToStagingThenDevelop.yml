@@ -1,8 +1,8 @@
 name: Automerge Main -> Staging -> Develop
 
 on:
-  push:
-    branches: [ "main" ] # triggered when a push to 'main' happens.
+#  push:
+#    branches: [ "main" ] # triggered when a push to 'main' happens.
   workflow_dispatch: # on button click
 
 jobs:
