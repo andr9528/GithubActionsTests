@@ -9,7 +9,7 @@ jobs:
   merge-main-to-staging:
     runs-on: ubuntu-latest
     steps:
-#      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Set Git config
         run: |
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -28,6 +28,7 @@ jobs:
   merge-staging-to-develop:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Set Git config
         run: |
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
